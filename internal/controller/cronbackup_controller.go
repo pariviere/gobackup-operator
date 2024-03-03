@@ -25,7 +25,6 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/client-go/kubernetes"
-	"k8s.io/client-go/tools/clientcmd"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/log"
@@ -137,7 +136,8 @@ func (r *CronBackupReconciler) createBackupJob(ctx context.Context) (*batchv1.Jo
 		},
 	}
 
-	config, err := clientcmd.BuildConfigFromFlags("", "/Users/payam/.kube/config")
+	config, err := ctrl.GetConfig()
+
 	if err != nil {
 		return nil, err
 	}
@@ -205,7 +205,7 @@ func (r *CronBackupReconciler) createBackupCronJob(ctx context.Context) (*batchv
 		},
 	}
 
-	config, err := clientcmd.BuildConfigFromFlags("", "/Users/payam/.kube/config")
+	config, err := ctrl.GetConfig()
 	if err != nil {
 		return nil, err
 	}
